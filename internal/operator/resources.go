@@ -51,7 +51,7 @@ func Service(serviceName string, port int32, targetPort int32, nodePort int32) r
 
 func StatefulSet(servicesName string, app *examplev1beta1.HotelReservationApp) resources.Reconcileable {
 
-	statefulSetName := "mongodb" + servicesName
+	statefulSetName := "mongodb-" + servicesName
 
 	statefulSet := &appsv1.StatefulSet{
 		ObjectMeta: metav1.ObjectMeta{
@@ -128,7 +128,7 @@ func DeploymentForMem(servicesName string, app *examplev1beta1.HotelReservationA
 	//	imageName = webHook.Spec.DockerRegistryPrefix + "/opencontent-audit-webhook@sha256:f4935b3a1687aeb23922fd144f880cc5a4f00404e794a4e30cccd6392cbe29f5"
 	//}
 
-	deployName := "memcached" + servicesName
+	deployName := "memcached-" + servicesName
 
 	// Instantialize the data structure
 	deployment := &appsv1.Deployment{
@@ -255,7 +255,7 @@ func DeploymentForLogic(deployName string, port int32, app *examplev1beta1.Hotel
 						},
 					}},
 					Containers: []corev1.Container{{
-						Image:           "yz2297/hotel_reservation",
+						Image:           "youngpig/hotel_reservation",
 						ImagePullPolicy: "IfNotPresent",
 						Name:            "hotelreservation-" + deployName,
 						Command:         []string{deployName},
@@ -275,7 +275,7 @@ func DeploymentForLogic(deployName string, port int32, app *examplev1beta1.Hotel
 						},
 						VolumeMounts: []corev1.VolumeMount{
 							{
-								MountPath: "/go/src/github.com/harlow/go-micro-services",
+								MountPath: "/go/src/github.com/harlow/go-micro-services/config",
 								Name:      "varconfig",
 							},
 						},
