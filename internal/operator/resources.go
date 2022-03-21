@@ -191,6 +191,10 @@ func DeploymentForLogic(deployName string, port int32, app *examplev1beta1.Hotel
 
 	var runAsUser int64 = 1000321000
 
+	hostName := app.Spec.LogicNodeName
+	if deployName == "search" {
+		hostName = app.Spec.DataNodeName
+	}
 	//imageName := "cp.icr.io/cp/opencontent-audit-webhook@sha256:f4935b3a1687aeb23922fd144f880cc5a4f00404e794a4e30cccd6392cbe29f5"
 	//if len(strings.TrimSpace(webHook.Spec.DockerRegistryPrefix)) > 0 {
 	//	imageName = webHook.Spec.DockerRegistryPrefix + "/opencontent-audit-webhook@sha256:f4935b3a1687aeb23922fd144f880cc5a4f00404e794a4e30cccd6392cbe29f5"
@@ -223,7 +227,7 @@ func DeploymentForLogic(deployName string, port int32, app *examplev1beta1.Hotel
 				},
 				Spec: corev1.PodSpec{
 					NodeSelector: map[string]string{
-						"kubernetes.io/hostname": app.Spec.LogicNodeName,
+						"kubernetes.io/hostname": hostName,
 					},
 					SecurityContext: &corev1.PodSecurityContext{
 						RunAsUser:    &runAsUser,
