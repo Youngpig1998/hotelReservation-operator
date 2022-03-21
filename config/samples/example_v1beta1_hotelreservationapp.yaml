@@ -1,0 +1,10 @@
+apiVersion: example.njtech.edu.cn/v1beta1
+kind: HotelReservationApp
+metadata:
+  name: hotelreservationapp-sample
+spec:
+  logicNodeIp: 172.16.84.130
+  logicNodeName: work-node1
+  dataNodeIp: 172.16.84.128
+  dataNodeName: data-node
+  dockerRegistryPrefix: docker.io/youngpig/
